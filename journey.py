@@ -17,7 +17,7 @@ MODULOS = [
      "paginas": ["Empieza aquí", "Guía del emprendedor", "Glosario", "Mi recorrido"], "hitos": ["plan_leido", "primer_producto"]},
     {"clave": "formaliza", "nombre": "Formaliza", "emoji": "🏛️", "color": "#064E3B", "lema": "Tu empresa, tus permisos y tus datos en regla.",
      "paginas": ["Requisitos Chile", "Cumplimiento (admin)"], "hitos": ["empresa_formalizada", "datos_responsable"]},
-    {"clave": "importa", "nombre": "Importa", "emoji": "📦", "color": "#78350F", "lema": "Elige, cotiza el flete y tráelo sin sorpresas.",
+    {"clave": "importa", "nombre": "Abastece", "emoji": "📦", "color": "#78350F", "lema": "Elige, cotiza el flete y tráelo sin sorpresas.",
      "paginas": ["Catálogo de productos", "Cotiza tu flete", "Costeo e internación", "Operación y stock"], "hitos": ["primer_flete", "primer_costeo", "primer_embarque", "mercaderia_en_bodega"]},
     {"clave": "vende", "nombre": "Vende", "emoji": "🛒", "color": "#5B21B6", "lema": "Precio con margen limpio y ventas registradas.",
      "paginas": ["Precios y márgenes", "Ventas y dossier"], "hitos": ["primera_venta", "multicanal", "diez_ventas"]},
@@ -219,4 +219,4 @@ def mision_del_dia(hitos: list[Hito], hoy: date | None = None) -> dict[str, Any]
     if sig is None:
         return {"titulo": "Recorrido completo", "detalle": "Lograste los 14 hitos. Mantén la racha registrando ventas y gastos cada día.", "pagina": "Salud de tu empresa", "icono": "🏆", "racha": r}
     mod = next((m for m in MODULOS if sig.clave in m["hitos"]), MODULOS[0])
-    return {"titulo": f"Misión de hoy: {MISIONES.get(sig.clave, sig.titulo)}", "detalle": f"{sig.detalle} Lo consigues en {sig.pagina}.", "pagina": sig.pagina, "icono": mod["emoji"], "modulo": mod["nombre"], "hito": sig, "racha": r}
+    return {"titulo": f"Misión de hoy: {MISIONES.get(sig.clave, sig.titulo)}", "detalle": f"Se hace en {sig.pagina}. Al lograrlo desbloqueas la medalla «{sig.titulo}».", "pagina": sig.pagina, "icono": mod["emoji"], "modulo": mod["nombre"], "hito": sig, "racha": r}

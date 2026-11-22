@@ -46,7 +46,7 @@ class Dossier(FPDF):
         self.set_y(3)
         self.set_font("Helvetica", "B", 11)
         self.set_text_color(255, 255, 255)
-        self.cell(0, 8, _s("Importo - Dossier Ejecutivo"), align="L")
+        self.cell(0, 8, _s("Importa - Dossier Ejecutivo"), align="L")
         self.set_font("Helvetica", "", 9)
         self.cell(0, 8, _s(datetime.now().strftime("%d-%m-%Y %H:%M")), align="R")
         self.ln(14)

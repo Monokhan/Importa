@@ -62,9 +62,9 @@ def hash_email(email: str) -> str:
 def politica_privacidad(r: dict[str, str] | None = None) -> str:
     r = r or datos_responsable()
     dpo = f"\n- Delegado de protección de datos: {r['resp_dpo']}" if r.get("resp_dpo") else ""
-    return f"""### Política de Privacidad de Importo · versión {VERSION_POLITICA}
+    return f"""### Política de Privacidad de Importa · versión {VERSION_POLITICA}
 
-Esta política explica cómo **Importo** trata tus datos personales, conforme a la Ley 19.628 sobre protección de la vida privada, modificada por la Ley 21.719, que rige plenamente desde el 1 de diciembre de 2026 y es fiscalizada por la Agencia de Protección de Datos Personales.
+Esta política explica cómo **Importa** trata tus datos personales, conforme a la Ley 19.628 sobre protección de la vida privada, modificada por la Ley 21.719, que rige plenamente desde el 1 de diciembre de 2026 y es fiscalizada por la Agencia de Protección de Datos Personales.
 
 **1. Responsable del tratamiento**
 - {r['resp_nombre']} · RUT {r['resp_rut']}

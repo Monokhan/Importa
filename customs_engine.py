@@ -110,7 +110,7 @@ def honorarios_agente(cif_usd: float, tarifa_base_usd: float = 150.0, forzar: bo
     else:
         pct = 0.005
     honorario = max(tarifa_base_usd, cif_usd * pct)
-    detalle = f"max(base US${tarifa_base_usd:,.0f}; {pct*100:.2f}% × CIF)"
+    detalle = f"el mayor entre la tarifa base de US$ {tarifa_base_usd:,.0f} y el {pct*100:.2f} % del CIF".replace(",", "#").replace(".", ",").replace("#", ".")
     return round(honorario, 2), obligatorio, detalle
 
 
@@ -594,7 +594,7 @@ def cotizar_flete(f: dict[str, Any], cbm: float, peso_kg: float, fob_usd: float,
         cap = CAPACIDAD_FCL.get(modo, 28.0)
         n = max(1, math.ceil(cbm / cap - 1e-9))
         unidades_cobradas = float(n)
-        unidad_txt = f"{n} contenedor(es)"
+        unidad_txt = f"{n} {'contenedor' if n == 1 else 'contenedores'}"
         base = n * f["tarifa"]
         uso = cbm / (cap * n) * 100
         if uso < 60:

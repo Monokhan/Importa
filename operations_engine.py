@@ -54,10 +54,10 @@ def estado_dias_libres(fecha_eta: date, dias_libres: int, hoy: date | None = Non
     elif restantes >= 3:
         color, msg, cargo = "verde", f"Quedan {restantes} días libres (hasta {limite.strftime('%d-%m-%Y')}).", 0.0
     elif restantes >= 0:
-        color, msg, cargo = "ambar", f"¡Atención! Solo {restantes} día(s) libre(s). Retirar antes del {limite.strftime('%d-%m-%Y')}.", 0.0
+        color, msg, cargo = "ambar", (f"¡Atención! Queda {restantes} día libre." if restantes == 1 else (f"¡Atención! Quedan {restantes} días libres." if restantes > 1 else "¡Atención! Hoy es el último día libre.")) + f" Retira antes del {limite.strftime('%d-%m-%Y')}.", 0.0
     else:
         cargo = abs(restantes) * tarifa_dia_usd
-        color, msg = "rojo", f"SOBRESTADÍA: {abs(restantes)} día(s) vencido(s). Cargo estimado US${cargo:,.0f} y creciendo."
+        color, msg = "rojo", f"SOBRESTADÍA: {abs(restantes)} {'día vencido' if abs(restantes) == 1 else 'días vencidos'}. Cargo estimado US$ {cargo:,.0f} y creciendo.".replace(",", ".")
     return EstadoDiasLibres(fecha_eta.isoformat(), limite.isoformat(), dias_libres, transcurridos, restantes, color, msg, round(cargo, 2))
 
 

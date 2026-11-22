@@ -1,5 +1,5 @@
 # Producción con HTTPS automático (Caddy + Let's Encrypt).
-# 1) cp .env.example .env  y completa IMPORTO_PEPPER y DOMINIO
+# 1) cp .env.example .env  y completa IMPORTA_PEPPER y DOMINIO
 # 2) docker compose up -d
 services:
   app:
@@ -7,7 +7,7 @@ services:
     restart: unless-stopped
     env_file: .env
     environment:
-      - IMPORTO_DB=/data/importo.db
+      - IMPORTA_DB=/data/importa.db
     volumes:
       - datos:/data
     expose:

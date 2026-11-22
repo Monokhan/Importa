@@ -1,9 +1,9 @@
 """
-auth.py — Autenticación y seguridad de cuentas para Importo.
+auth.py — Autenticación y seguridad de cuentas para Importa.
 
 - Registro e inicio de sesión con correo electrónico personal + contraseña.
 - Contraseñas con PBKDF2-HMAC-SHA256 (600.000 iteraciones), sal aleatoria por usuario y
-  "pepper" opcional desde la variable de entorno IMPORTO_PEPPER (o CHILEIMPORT_PEPPER).
+  "pepper" opcional desde la variable de entorno IMPORTA_PEPPER (acepta también IMPORTO_PEPPER y CHILEIMPORT_PEPPER).
 - Comparación en tiempo constante, bloqueo temporal tras intentos fallidos y expiración
   de sesión por inactividad.
 - Cada sesión de Streamlit guarda el usuario en `st.session_state`; los datos se aíslan
@@ -42,7 +42,7 @@ class Usuario:
 
 def _pepper() -> bytes:
     # Se acepta el nombre antiguo para que las cuentas creadas antes del cambio de marca sigan entrando.
-    return (os.environ.get("IMPORTO_PEPPER") or os.environ.get("CHILEIMPORT_PEPPER", "")).encode()
+    return (os.environ.get("IMPORTA_PEPPER") or os.environ.get("IMPORTO_PEPPER") or os.environ.get("CHILEIMPORT_PEPPER", "")).encode()
 
 
 def hash_password(password: str, salt: Optional[bytes] = None) -> tuple[str, str]:
@@ -63,7 +63,7 @@ def email_valido(email: str) -> bool:
 # Contraseñas que aparecen primero en cualquier ataque de diccionario.
 PASSWORDS_DEBILES = {
     "12345678", "123456789", "1234567890", "contrasena1", "contraseña1", "password1", "password123",
-    "qwerty123", "abc12345", "importo123", "chile1234", "santiago1", "admin1234", "usuario123",
+    "qwerty123", "abc12345", "importa123", "importo123", "minegocio1", "chile1234", "santiago1", "admin1234", "usuario123",
     "iloveyou1", "11111111", "00000000", "asdf1234", "zxcv1234", "1q2w3e4r",
 }
 

@@ -12,7 +12,10 @@
 
 </div>
 
-**Importa** (antes *Importo*) calcula **tu costo real, puesto en bodega**: costeo de importaciones, inteligencia tributaria (F29/SII), logística y caja para comerciantes chilenos. Python + Streamlit + SQLite + Plotly + fpdf2, sin servicios de pago, multiusuario, con cuentas por correo y cumplimiento de la Ley 19.628 / 21.719.
+# Importa · v2.1.0
+
+**Tu negocio importa.** Tu costo real, puesto en bodega: costeo de importaciones, inteligencia tributaria (F29/SII), logística y caja para comerciantes chilenos.
+Python + Streamlit + SQLite + Plotly + fpdf2. Sin servicios de pago. Multiusuario, con cuentas por correo y cumplimiento de la Ley 19.628 / 21.719.
 
 <table>
 <tr>
@@ -25,7 +28,7 @@
 </tr>
 </table>
 
-> **Versiones en este repositorio:** el código de la carpeta `importo_v2.0.0/` es la **v2.0.0 (Importo)**, que es la que documenta esta guía. La **v2.1.0**, con la marca *Importa*, está dentro de `files.zip` junto con el material de marca. Las capturas de arriba son de la v2.1.0.
+> La versión anterior (**Importo v2.0.0**) quedó guardada en la rama [`version-2.0.0`](https://github.com/Monokhan/Importa/tree/version-2.0.0). El material de marca y redes sociales está en `files.zip`.
 
 ---
 
@@ -46,7 +49,7 @@
 
 ## 1. Qué hace
 
-El menú lateral se agrupa en cinco módulos plegables — **📚 Aprende · 🏛️ Formaliza · 📦 Importa · 🛒 Vende · 📊 Administra** — cada uno con su progreso. Ninguno se bloquea: si ya sabes importar, puedes saltarte pasos. Cada página indica a qué etapa pertenece, trae un desplegable que explica para qué sirve, y cada campo tiene su globo de ayuda.
+El menú lateral se agrupa en cinco módulos plegables — **📚 Aprende · 🏛️ Formaliza · 📦 Abastece · 🛒 Vende · 📊 Administra** — cada uno con su progreso. Ninguno se bloquea: si ya sabes importar, puedes saltarte pasos. Cada página indica a qué etapa pertenece, trae un desplegable que explica para qué sirve, y cada campo tiene su globo de ayuda.
 
 | Sección | Funcionalidad |
 |---|---|
@@ -91,7 +94,7 @@ El script crea el entorno virtual, instala dependencias y abre `http://localhost
 
 ```bash
 # 1. Entrar a la carpeta
-cd importo
+cd Importa
 
 # 2. Crear y activar el entorno virtual
 python -m venv .venv
@@ -101,14 +104,14 @@ source .venv/bin/activate          # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 
 # 4. (Recomendado) definir el pepper de contraseñas
-cp .env.example .env               # edita IMPORTO_PEPPER con una frase larga
-export IMPORTO_PEPPER="tu-frase"   # Windows: set IMPORTO_PEPPER=tu-frase
+cp .env.example .env               # edita IMPORTA_PEPPER con una frase larga
+export IMPORTA_PEPPER="tu-frase"   # Windows: set IMPORTA_PEPPER=tu-frase
 
 # 5. Ejecutar
 streamlit run app.py
 ```
 
-Se abre el navegador en `http://localhost:8501`. La base `importo.db` se crea sola en la primera ejecución.
+Se abre el navegador en `http://localhost:8501`. La base `importa.db` se crea sola en la primera ejecución.
 
 **Desde el celular en tu misma red WiFi:** `streamlit run app.py --server.address 0.0.0.0` y entra a `http://IP_DE_TU_PC:8501` (la IP la ves con `ipconfig` / `ifconfig`).
 
@@ -120,13 +123,13 @@ Se abre el navegador en `http://localhost:8501`. La base `importo.db` se crea so
 
 ### 4.1 Crear el repositorio en GitHub
 1. Entra a [github.com/new](https://github.com/new).
-2. *Repository name*: `importo`.
+2. *Repository name*: `Importa`.
 3. Elige **Private** (recomendado: la app maneja datos de tu negocio). Puedes hacerlo público después.
 4. **No** marques "Add a README" ni ".gitignore" (ya vienen en la carpeta).
-5. Clic en **Create repository**. Copia la URL que aparece, por ejemplo `https://github.com/TU_USUARIO/importo.git`.
+5. Clic en **Create repository**. Copia la URL que aparece, por ejemplo `https://github.com/TU_USUARIO/Importa.git`.
 
 ### 4.2 Subir el código desde tu computador
-Abre una terminal dentro de la carpeta `importo` y ejecuta línea por línea:
+Abre una terminal dentro de la carpeta `Importa` y ejecuta línea por línea:
 
 ```bash
 # Identifícate ante Git (solo la primera vez en este computador)
@@ -139,17 +142,17 @@ git branch -M main
 
 # Agregar todos los archivos (el .gitignore excluye la base de datos, .env y respaldos)
 git add .
-git commit -m "Importo v2.0.0"
+git commit -m "Importa v2.0.0"
 
 # Conectar con GitHub y subir
-git remote add origin https://github.com/TU_USUARIO/importo.git
+git remote add origin https://github.com/TU_USUARIO/Importa.git
 git push -u origin main
 ```
 
 GitHub te pedirá autenticarte. Si pide contraseña, usa un **Personal Access Token**: GitHub → *Settings → Developer settings → Personal access tokens → Generate new token (classic)* con permiso `repo`. Pégalo como contraseña.
 
 ### 4.3 Verificar
-Recarga la página del repositorio: deben verse `app.py`, `README.md`, etc. **No** deben aparecer `importo.db` ni `.env` (si aparecen, bórralos del repo y revisa `.gitignore`).
+Recarga la página del repositorio: deben verse `app.py`, `README.md`, etc. **No** deben aparecer `importa.db` ni `.env` (si aparecen, bórralos del repo y revisa `.gitignore`).
 
 ### 4.4 Guardar cambios futuros
 Cada vez que modifiques algo:
@@ -162,8 +165,8 @@ git push
 
 ### 4.5 Clonar en otro computador
 ```bash
-git clone https://github.com/TU_USUARIO/importo.git
-cd importo
+git clone https://github.com/TU_USUARIO/Importa.git
+cd Importa
 ./run.sh          # o run.bat en Windows
 ```
 
@@ -173,10 +176,10 @@ cd importo
 
 ### Opción 1 · Streamlit Community Cloud (gratis, ideal para partir)
 1. Ve a [share.streamlit.io](https://share.streamlit.io) e inicia sesión con GitHub.
-2. **New app** → elige el repositorio `importo`, rama `main`, archivo `app.py`.
+2. **New app** → elige el repositorio `Importa`, rama `main`, archivo `app.py`.
 3. En **Advanced settings → Secrets** agrega:
    ```toml
-   IMPORTO_PEPPER = "una-frase-larga-y-secreta"
+   IMPORTA_PEPPER = "una-frase-larga-y-secreta"
    ```
 4. **Deploy**. En 2–3 minutos tendrás una URL `https://…streamlit.app` con HTTPS incluido.
 
@@ -188,10 +191,10 @@ Funciona en cualquier VPS (DigitalOcean, Vultr, Hetzner, AWS Lightsail; desde ~U
 ```bash
 # En el servidor (Ubuntu 22.04+)
 sudo apt update && sudo apt install -y docker.io docker-compose-v2 git
-git clone https://github.com/TU_USUARIO/importo.git
-cd importo
+git clone https://github.com/TU_USUARIO/Importa.git
+cd Importa
 cp .env.example .env
-nano .env        # completa IMPORTO_PEPPER y DOMINIO=app.tudominio.cl
+nano .env        # completa IMPORTA_PEPPER y DOMINIO=app.tudominio.cl
 docker compose up -d --build
 ```
 
@@ -199,13 +202,13 @@ Caddy obtiene el certificado HTTPS solo. La base queda en el volumen `datos` (pe
 
 - Ver logs: `docker compose logs -f app`
 - Actualizar: `git pull && docker compose up -d --build`
-- Respaldo: `docker compose exec app python -c "import sqlite3;s=sqlite3.connect('/data/importo.db');d=sqlite3.connect('/data/respaldo.db');s.backup(d)"` y luego `docker compose cp app:/data/respaldo.db ./respaldo.db`
+- Respaldo: `docker compose exec app python -c "import sqlite3;s=sqlite3.connect('/data/importa.db');d=sqlite3.connect('/data/respaldo.db');s.backup(d)"` y luego `docker compose cp app:/data/respaldo.db ./respaldo.db`
 
 Además, en `.streamlit/config.toml` descomenta `allowedHosts = ["app.tudominio.cl"]`.
 
 ### Opción 3 · Servidor propio sin Docker
 ```bash
-git clone … && cd importo && ./run.sh
+git clone … && cd Importa && ./run.sh
 ```
 y coloca delante nginx o Caddy con HTTPS. Para que sobreviva reinicios, crea un servicio `systemd` que ejecute `.venv/bin/streamlit run app.py --server.port 8501`.
 
@@ -225,7 +228,7 @@ y coloca delante nginx o Caddy con HTTPS. Para que sobreviva reinicios, crea un 
 ## 7. Seguridad y cuentas
 
 - Registro con correo personal y contraseña (mín. 8 caracteres, letras y números).
-- PBKDF2-HMAC-SHA256 con 600.000 iteraciones, sal por usuario, comparación en tiempo constante, *pepper* opcional `IMPORTO_PEPPER` (si lo defines, guárdalo: sin él nadie podrá entrar).
+- PBKDF2-HMAC-SHA256 con 600.000 iteraciones, sal por usuario, comparación en tiempo constante, *pepper* opcional `IMPORTA_PEPPER` (si lo defines, guárdalo: sin él nadie podrá entrar).
 - Bloqueo de 15 min tras 5 intentos fallidos; mismo mensaje exista o no el correo; sesión expira a las 8 h sin uso.
 - Todos los datos llevan `usuario_id`; ninguna consulta cruza cuentas. SQLite en modo WAL con índices.
 - El administrador puede desactivar/reactivar cuentas.
@@ -237,7 +240,7 @@ y coloca delante nginx o Caddy con HTTPS. Para que sobreviva reinicios, crea un 
 - **Contenedor sin root** y cabeceras HSTS, nosniff, anti-clickjacking y Referrer-Policy en el proxy.
 
 ### Al actualizar desde ChileImport ERP Pro
-No tienes que hacer nada: si existe `chileimport.db` y aún no hay `importo.db`, la app sigue usando la base antigua y todas las cuentas entran igual. La variable `CHILEIMPORT_PEPPER` se sigue aceptando junto con la nueva `IMPORTO_PEPPER`.
+No tienes que hacer nada: si existe `chileimport.db` y aún no hay `importa.db`, la app sigue usando la base antigua y todas las cuentas entran igual. La variable `CHILEIMPORT_PEPPER` se sigue aceptando junto con la nueva `IMPORTA_PEPPER`.
 
 ---
 

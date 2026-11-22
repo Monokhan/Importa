@@ -1,5 +1,5 @@
 """
-database.py — Capa de persistencia SQLite para Importo.
+database.py — Capa de persistencia SQLite para Importa.
 
 - Context manager transaccional (`get_connection`): commit al salir, rollback ante error.
 - Creación automática de tablas (`init_db`).
@@ -19,17 +19,19 @@ from typing import Any, Iterator, Optional
 
 def _ruta_db() -> str:
     """Ruta de la base. Respeta la variable de entorno y, si no la hay, reutiliza la base
-    de versiones anteriores (chileimport.db) para no perder datos al cambiar de marca."""
-    for var in ("IMPORTO_DB", "CHILEIMPORT_DB"):
+    de versiones anteriores (importo.db o chileimport.db) para no perder datos al cambiar de marca."""
+    for var in ("IMPORTA_DB", "IMPORTO_DB", "CHILEIMPORT_DB"):
         valor = os.environ.get(var)
         if valor:
             return valor
-    if not os.path.exists("importo.db") and os.path.exists("chileimport.db"):
-        return "chileimport.db"
-    return "importo.db"
+    if not os.path.exists("importa.db"):
+        for anterior in ("importo.db", "chileimport.db"):
+            if os.path.exists(anterior):
+                return anterior
+    return "importa.db"
 
 
-DB_PATH = _ruta_db()  # en Docker: /data/importo.db
+DB_PATH = _ruta_db()  # en Docker: /data/importa.db
 
 # Tablas cuyos registros pertenecen a un usuario (aislamiento multiusuario)
 TABLAS_USUARIO = ("productos", "cotizaciones", "cotizacion_items", "embarques", "inventario", "ventas", "f29_registro", "gastos", "fletes")
@@ -1228,7 +1230,7 @@ def eliminar_cotizacion(cid: int, forzar: bool = False) -> dict[str, int]:
     uid = _uid()
     n_ventas = ventas_de_cotizacion(cid)
     if n_ventas and not forzar:
-        raise ValueError(f"La cotización tiene {n_ventas} venta(s) registrada(s). Elimínalas primero o confirma el borrado completo.")
+        raise ValueError(f"La cotización tiene {n_ventas} {'venta registrada' if n_ventas == 1 else 'ventas registradas'}. Elimínalas primero o confirma el borrado completo.")
     out: dict[str, int] = {}
     with get_connection() as conn:
         if n_ventas:

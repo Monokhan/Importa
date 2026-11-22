@@ -21,7 +21,7 @@ TIMEOUT = 8
 @st.cache_data(ttl=1800, show_spinner=False)
 def buscar_mercadolibre(query: str, limit: int = 50, access_token: str = "") -> dict[str, Any]:
     """Devuelve {'ok', 'error', 'items': [...]}. Nunca lanza."""
-    headers = {"User-Agent": "Importo/2.0", "Accept": "application/json"}
+    headers = {"User-Agent": "Importa/2.1", "Accept": "application/json"}
     if access_token:
         headers["Authorization"] = f"Bearer {access_token}"
     try:

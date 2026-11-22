@@ -183,11 +183,18 @@ def calcular_target(capital_clp: float, desembolso_unit_clp: float, landed_unit_
     pct = m / (precio / (1 + IVA)) * 100 if precio else 0
     ratio = precio / landed_unit_clp if landed_unit_clp else 0
     viable = ratio <= 4.0
+    def _clp(v: float) -> str:
+        return "$" + f"{v:,.0f}".replace(",", ".")
+
+    def _dec(v: float) -> str:
+        return f"{v:.1f}".replace(".", ",")
+
     msg = (
-        f"Compra {unidades} unidades (usas ${usado:,.0f}). Vende a ~${precio:,.0f} bruto ponderado → margen limpio ${m:,.0f}/u y retorno ${multiplo:.1f}× el capital."
+        f"Compra {unidades} unidades (usas {_clp(usado)}). Véndelas a un precio ponderado cercano a {_clp(precio)} con IVA: "
+        f"te quedan {_clp(m)} limpios por unidad y recuperas {_dec(multiplo)} veces tu capital."
         if viable
-        else f"Necesitarías vender a {ratio:.1f}× tu landed cost (${precio:,.0f}). Es poco realista: busca un producto con mejor factor o negocia el FOB."
-    ).replace(",", ".")
+        else f"Tendrías que vender a {_dec(ratio)} veces tu costo en bodega ({_clp(precio)}). Es poco realista: busca un producto con mejor factor o negocia el FOB."
+    )
     return ResultadoTarget(capital_clp, desembolso_unit_clp, unidades, round(usado), round(meta_total), round(utilidad_req), round(margen_req), precio, round(pct, 1), viable, msg, det)
 
 

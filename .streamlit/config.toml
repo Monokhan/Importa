@@ -1,0 +1,15 @@
+[theme]
+primaryColor = "#2563EB"
+backgroundColor = "#F3F5F9"
+secondaryBackgroundColor = "#FFFFFF"
+textColor = "#0F172A"
+
+[server]
+headless = true
+enableXsrfProtection = true
+maxUploadSize = 5
+# En producción, limita los hosts aceptados a tu dominio:
+# allowedHosts = ["app.tudominio.cl"]
+
+[browser]
+gatherUsageStats = false

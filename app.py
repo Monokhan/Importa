@@ -1,5 +1,5 @@
 """
-app.py — Importo
+app.py — Importa
 Tu costo real, puesto en bodega.
 Costeo de importaciones multiproducto, inteligencia tributaria (F29/SII), logística y caja.
 
@@ -43,11 +43,11 @@ from pdf_report import generar_dossier
 from pricing_multichannel import IVA, calcular_mix, calcular_target, canales_default, punto_equilibrio_mensual, roas_minimo, semaforo_viabilidad
 from tax_engine import f29_mensual, resumen_f29
 
-__version__ = "2.0.0"
+__version__ = "2.1.0"
 
 tooltips.instalar()
 _ICONO = Path(__file__).with_name("assets") / "favicon.png"
-st.set_page_config(page_title="Importo", page_icon=str(_ICONO) if _ICONO.exists() else "📦", layout="wide", initial_sidebar_state="auto")
+st.set_page_config(page_title="Importa · Tu negocio importa", page_icon=str(_ICONO) if _ICONO.exists() else "📦", layout="wide", initial_sidebar_state="auto")
 db.init_db()
 
 # =============================================================================
@@ -263,9 +263,9 @@ def E(valor) -> str:
 
 
 def isotipo(px: int = 34, fondo: str = "#2563EB", trazo: str = "#ffffff") -> str:
-    """Isotipo de Importo: flecha que entra y se detiene sobre la línea de tu bodega."""
+    """Isotipo de Importa: flecha que entra y se detiene sobre la línea de tu bodega."""
     return (
-        f'<svg width="{px}" height="{px}" viewBox="0 0 64 64" role="img" aria-label="Importo" style="display:block">'
+        f'<svg width="{px}" height="{px}" viewBox="0 0 64 64" role="img" aria-label="Importa" style="display:block">'
         f'<rect x="4" y="4" width="56" height="56" rx="16" fill="{fondo}"></rect>'
         f'<path d="M32 16 V36" stroke="{trazo}" stroke-width="5.5" stroke-linecap="round" fill="none"></path>'
         f'<path d="M23 29 L32 38 L41 29" stroke="{trazo}" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>'
@@ -282,6 +282,13 @@ def mision_banner(cta: bool = True) -> None:
         if st.button(f'Ir a {m["pagina"]} →', type="primary", key=f'mision_{m["pagina"]}'):
             st.session_state["page"] = m["pagina"]
             st.rerun()
+
+
+def plural(n: int, singular: str, plural_: str) -> str:
+    """'1 embarque activo', '3 embarques activos', 'sin embarques activos'."""
+    if n == 0:
+        return f"sin {plural_}"
+    return f"{n} {singular if n == 1 else plural_}"
 
 
 def esc(s: str) -> str:
@@ -324,7 +331,7 @@ if usuario is None:
     st.markdown("<style>section[data-testid='stSidebar']{display:none}</style>", unsafe_allow_html=True)
     _, centro, _ = st.columns([1, 1.1, 1])
     with centro:
-        html('<div style="text-align:center;margin:40px 0 18px"><div style="display:flex;justify-content:center">' + isotipo(54) + '</div><h1 style="margin:14px 0 2px;letter-spacing:-.03em">Importo</h1><p class="sub" style="margin:0">Tu costo real, puesto en bodega</p></div>')
+        html('<div style="text-align:center;margin:40px 0 18px"><div style="display:flex;justify-content:center">' + isotipo(54) + '</div><h1 style="margin:14px 0 2px;letter-spacing:-.03em">Importa</h1><p class="sub" style="margin:0">Tu negocio importa</p></div>')
         t_login, t_reg = st.tabs(["Iniciar sesión", "Crear cuenta"])
         with t_login:
             with st.form("login"):
@@ -417,7 +424,7 @@ n_ret = sum(1 for v in db.list_ventas() if v["estado_liquidacion"] == "Retenido"
 # Sidebar: marca, navegación, ajustes
 # =============================================================================
 with st.sidebar:
-    html('<div class="brand">' + isotipo(32, fondo="#ffffff", trazo="#2563EB") + '<span>Importo</span></div>')
+    html('<div class="brand">' + isotipo(32, fondo="#ffffff", trazo="#2563EB") + '<span>Importa</span></div>')
     _mods = journey.progreso_modulos(_hitos)
     _mod_actual = journey.modulo_actual(_mods)
     ETAPA_DE = {p: m["nombre"] for m in _mods for p in m["paginas"]}
@@ -485,7 +492,7 @@ with st.sidebar:
                     st.session_state["page"] = _p
                     st.rerun()
     st.divider()
-    html(f'<div style="font-size:12px;color:#94A3B8;margin-bottom:6px">Sesión de <b style="color:#fff">{E(usuario.nombre)}</b><br>{E(usuario.email)}<br><span style="color:#64748B">Importo v{__version__}</span></div>')
+    html(f'<div style="font-size:12px;color:#94A3B8;margin-bottom:6px">Sesión de <b style="color:#fff">{E(usuario.nombre)}</b><br>{E(usuario.email)}<br><span style="color:#64748B">Importa v{__version__}</span></div>')
     if st.button("Cerrar sesión", width="stretch"):
         auth.cerrar_sesion()
         st.rerun()
@@ -529,7 +536,12 @@ tpl = "plotly_dark" if oscuro else "plotly_white"
 
 
 def fig_layout(fig: go.Figure, h: int = 340) -> go.Figure:
-    fig.update_layout(height=h, margin=dict(l=8, r=8, t=44, b=8), template=tpl, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", font=dict(family="Manrope, system-ui", color=DARK["ink2"] if oscuro else LIGHT["ink2"]), legend=dict(orientation="h", y=1.12, x=0), title_font=dict(size=15, color=DARK["ink"] if oscuro else LIGHT["ink"]))
+    fig.update_layout(height=h, margin=dict(l=8, r=8, t=44, b=8), template=tpl, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", font=dict(family="Manrope, system-ui", color=DARK["ink2"] if oscuro else LIGHT["ink2"]), legend=dict(orientation="h", y=1.12, x=0))
+    if fig.layout.title and fig.layout.title.text:
+        fig.update_layout(title_font=dict(size=15, color=DARK["ink"] if oscuro else LIGHT["ink"]))
+    else:
+        fig.update_layout(title_text="")
+    fig.update_layout(legend_title_text="")
     return fig
 
 
@@ -587,7 +599,7 @@ elif page == "Panel de hoy":
     meses_es = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
     a, b = st.columns([3, 1]) if not celular else (st.container(), st.container())
     with a:
-        title(f"Hola, {usuario.nombre.split()[0]}", f"{dias_es[hoy.weekday()]} {hoy.day} de {meses_es[hoy.month-1]} · {len(activos)} embarque(s) activo(s)" + (f" · {liberadas} venta(s) liberadas hoy" if liberadas else ""))
+        title(f"Hola, {usuario.nombre.split()[0]}", f"{dias_es[hoy.weekday()]} {hoy.day} de {meses_es[hoy.month-1]} · {plural(len(activos), "embarque activo", "embarques activos")}" + (f" · {plural(liberadas, "venta liberada", "ventas liberadas")} hoy" if liberadas else ""))
     with b:
         html(f'<div style="text-align:right;margin-top:6px"><span class="pill"><span class="dot" style="background:var(--{SEM[f29.color]})"></span>F29 vence en {f29.dias_para_vencer} días</span></div>')
 
@@ -841,7 +853,7 @@ elif page == "Costeo e internación":
                                                participacion=l.participacion, flete_usd=l.flete_usd, seguro_usd=l.seguro_usd, cif_usd=l.cif_usd, advalorem_usd=l.advalorem_usd, iva_usd=l.iva_usd, iva_clp=l.iva_clp, comunes_clp=l.comunes_clp,
                                                landed_clp=l.landed_clp, landed_unit_clp=l.landed_unit_clp, desembolso_unit_clp=l.desembolso_unit_clp, factor_internacion=l.factor_internacion, tlc=int(l.tlc), dg=int(l.dg), producto_id=pid))
             ids = db.registrar_importacion(cot, eta, dl, C.get("forwarder", ""), tot.iva_clp, items)
-            st.success(esc(f"Embarque #{ids['embarque_id']} registrado con {len(items)} producto(s). IVA {clp(tot.iva_clp)} anotado como crédito fiscal."))
+            st.success(esc(f"Embarque #{ids['embarque_id']} registrado con {len(items)} {"producto" if len(items) == 1 else "productos"}. IVA {clp(tot.iva_clp)} anotado como crédito fiscal."))
 
     # ---------------- Modo guiado ----------------
     if modo == "Guiado":
@@ -942,7 +954,7 @@ elif page == "Costeo e internación":
                 if all(ok):
                     st.success("PSI aprobado: puedes liberar el pago final.")
                 else:
-                    st.caption(f"{len(aql) - sum(ok)} verificación(es) pendiente(s).")
+                    st.caption(f"{len(aql) - sum(ok)} {'verificación pendiente' if len(aql) - sum(ok) == 1 else 'verificaciones pendientes'}.")
             registrar_ui(lote, "p")
 
 # =============================================================================
@@ -995,7 +1007,7 @@ elif page == "Catálogo de productos":
                 db.upsert_producto(db.Producto(id=orig["id"], nombre=str(nuevo["nombre"]).strip(), hs_code=str(nuevo["hs_code"] or ""), categoria=str(nuevo["categoria"]), largo_cm=float(nuevo["largo_cm"]), ancho_cm=float(nuevo["ancho_cm"]), alto_cm=float(nuevo["alto_cm"]), peso_kg=float(nuevo["peso_kg"]), unidades_por_caja=int(nuevo["unidades_por_caja"]), fob_unit_usd=float(nuevo["fob_unit_usd"]), tlc=nuevo["tlc"], dg=nuevo["dg"], proveedor=str(nuevo["proveedor"] or ""), notas=orig.get("notas") or ""))
                 cambios += 1
         if cambios:
-            st.toast(f"{cambios} producto(s) actualizado(s)")
+            st.toast(f"{cambios} {'producto actualizado' if cambios == 1 else 'productos actualizados'}")
             st.rerun()
         a, b = cols(2)
         borrar = a.selectbox("Eliminar del catálogo", ["—"] + [f"#{p['id']} {p['nombre']}" for p in cat])
@@ -1170,7 +1182,7 @@ elif page == "Operación y stock":
                 st.caption(", ".join(f"{i['producto']} ({i['unidades']} u)" for i in items))
             with st.expander("Eliminar"):
                 nv = db.ventas_de_cotizacion(e["cotizacion_id"])
-                st.caption("Borra cotización, embarque, inventario y el crédito fiscal asociado." + (f" Tiene {nv} venta(s): se borrarán también con sus débitos." if nv else ""))
+                st.caption("Borra cotización, embarque, inventario y el crédito fiscal asociado." + (f" Tiene {nv} {'venta' if nv == 1 else 'ventas'}: se borrarán también con sus débitos." if nv else ""))
                 conf = st.checkbox("Confirmo", key=f"delc_{e['id']}")
                 if st.button("Eliminar embarque", key=f"delb_{e['id']}", disabled=not conf):
                     res = db.eliminar_cotizacion(e["cotizacion_id"], forzar=True)
@@ -1330,7 +1342,7 @@ elif page == "Ventas y dossier":
         flujo_pdf = dict(st.session_state.get("flujo", {}))
         flujo_pdf["cash_to_cash"] = st.session_state.get("c2c_msg", "")
         pdf_bytes = generar_dossier(liq_pdf, cub_pdf, mix_dict, f29_pdf, flujo_pdf, st.session_state.get("viab"), lineas_pdf)
-        st.download_button("Descargar dossier ejecutivo (PDF)", pdf_bytes, file_name=f"dossier_importo_{date.today()}.pdf", mime="application/pdf", type="primary")
+        st.download_button("Descargar dossier ejecutivo (PDF)", pdf_bytes, file_name=f"dossier_importa_{date.today()}.pdf", mime="application/pdf", type="primary")
 
 # =============================================================================
 # PÁGINA: Mi cuenta
@@ -1394,7 +1406,7 @@ elif page == "Privacidad y mis datos":
         html('<div class="status">Acceso y portabilidad</div>')
         st.caption("Descarga todo lo que la app guarda sobre ti en formato abierto (JSON).")
         datos = privacy.exportar_json(usuario.id)
-        if st.download_button("Descargar mis datos (JSON)", datos, file_name=f"mis_datos_importo_{date.today()}.json", mime="application/json", type="primary"):
+        if st.download_button("Descargar mis datos (JSON)", datos, file_name=f"mis_datos_importa_{date.today()}.json", mime="application/json", type="primary"):
             db.auditar("exportacion", "el titular descargó sus datos (portabilidad)")
         html('<div class="status" style="margin-top:18px">Rectificación</div>')
         st.caption("Corrige tu nombre y contraseña en **Mi cuenta**; tus datos comerciales se editan en cada sección.")
@@ -1544,7 +1556,7 @@ elif page == "Cumplimiento (admin)":
 
     st.markdown("### Registro de actividades de tratamiento (RAT)")
     st.dataframe(pd.DataFrame(privacy.registro_actividades(r)), width="stretch", hide_index=True)
-    st.download_button("Descargar RAT (Markdown)", privacy.rat_markdown(), file_name=f"RAT_importo_{date.today()}.md")
+    st.download_button("Descargar RAT (Markdown)", privacy.rat_markdown(), file_name=f"RAT_importa_{date.today()}.md")
 
     st.markdown("### Retención: cuentas inactivas")
     meses = int(float(r["resp_retencion_meses"] or 24))
@@ -1924,10 +1936,10 @@ elif page == "Cotiza tu flete":
                 db.upsert_flete(db.Flete(id=orig["id"], nombre=str(nuevo["nombre"]).strip(), modo=str(nuevo["modo"]), tarifa=float(nuevo["tarifa"]), proveedor=str(nuevo["proveedor"] or ""), origen=str(nuevo["origen"] or ""), destino=str(nuevo["destino"] or ""), minimo_usd=float(nuevo["minimo_usd"]), recargos_usd=float(nuevo["recargos_usd"]), locales_clp=float(nuevo["locales_clp"]), dias_transito=int(nuevo["dias_transito"]), dg_pct=float(nuevo["dg_pct"]), seguro_pct=orig.get("seguro_pct", 0.0), validez=str(nuevo["validez"] or ""), notas=orig.get("notas") or "", favorito=nuevo["favorito"], fecha=orig["fecha"]))
                 cambios += 1
         if cambios:
-            st.toast(f"{cambios} cotización(es) actualizada(s)")
+            st.toast(f"{cambios} {'cotización actualizada' if cambios == 1 else 'cotizaciones actualizadas'}")
             st.rerun()
         if borrar:
-            st.warning(f"Vas a eliminar {len(borrar)} cotización(es): {', '.join(str(b) for b in borrar)}.")
+            st.warning(f"Vas a eliminar {len(borrar)} {'cotización' if len(borrar) == 1 else 'cotizaciones'}: {', '.join(str(b) for b in borrar)}.")
             if st.button("Confirmar eliminación", type="primary"):
                 for fid in borrar:
                     db.eliminar_flete(fid)

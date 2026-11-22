@@ -22,7 +22,7 @@ TIMEOUT = 6
 def fetch_indicadores() -> dict[str, Any]:
     """Consulta mindicador.cl. Nunca lanza excepción: devuelve `ok=False` y error."""
     try:
-        r = requests.get(API_URL, timeout=TIMEOUT, headers={"User-Agent": "Importo/2.0"})
+        r = requests.get(API_URL, timeout=TIMEOUT, headers={"User-Agent": "Importa/2.1"})
         r.raise_for_status()
         data = r.json()
         return {

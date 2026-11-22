@@ -98,7 +98,7 @@ def salud_empresa(lead_time: int, tasa_ppm: float, checklist_hecho: int, checkli
             rojo += c == "rojo"
             ambar += c == "ambar"
     color = "rojo" if rojo else "ambar" if ambar else "verde"
-    dims.append(Dimension("Operación", color, f"{rojo} alerta(s) crítica(s), {ambar} por vencer", "Atiende hoy las alertas rojas en Operación y stock: cada día cuesta dólares o ventas perdidas." if rojo else "Programa esta semana lo que está por vencer." if ambar else "Sin alertas de almacenaje ni de stock."))
+    dims.append(Dimension("Operación", color, f"{rojo} {'alerta crítica' if rojo == 1 else 'alertas críticas'}, {ambar} por vencer", "Atiende hoy las alertas rojas en Operación y stock: cada día cuesta dólares o ventas perdidas." if rojo else "Programa esta semana lo que está por vencer." if ambar else "Sin alertas de almacenaje ni de stock."))
 
     # 6. Cumplimiento
     pct = checklist_hecho / checklist_total * 100 if checklist_total else 0

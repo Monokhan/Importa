@@ -1,5 +1,14 @@
 # Historial de versiones
 
+## 2.1.0 — 2026-09-25 · Importa
+- Nueva marca: **Importa**, con el lema «Tu negocio importa». Pantalla de acceso, barra lateral, título de pestaña, PDF, política de privacidad y archivos descargados.
+- El módulo del menú que se llamaba «Importa» pasa a llamarse **Abastece**, para no confundirse con la marca.
+- Compatibilidad: la app sigue usando `importo.db` o `chileimport.db` si no existe `importa.db`, y acepta `IMPORTO_PEPPER` y `CHILEIMPORT_PEPPER` además de `IMPORTA_PEPPER`. Nadie pierde datos ni acceso.
+- Redacción: se eliminaron todos los «(s)» de los textos visibles (por ejemplo, «sin embarques activos», «1 día libre», «3 cotizaciones actualizadas»).
+- Redacción: la misión del día ya no dice «Completaste…» para algo pendiente.
+- Redacción: el mensaje de Target 2.5x decía «retorno $2.5× el capital»; ahora dice «recuperas 2,5 veces tu capital», con decimales en formato chileno.
+- Los gráficos sin título ya no muestran la palabra «undefined».
+
 ## 2.0.0 — 2026-09-19 · la app pasa a llamarse **Importo**
 - Nueva identidad: isotipo propio (flecha que entra y se detiene sobre la línea de la bodega) en la pantalla de acceso, la barra lateral, el favicon y el ícono de aplicación; encabezado del PDF y títulos actualizados.
 - Variables de entorno `IMPORTO_PEPPER` e `IMPORTO_DB`, con los nombres antiguos aceptados. Si existe `chileimport.db` y no hay `importo.db`, se sigue usando la base anterior: nadie pierde datos ni acceso.
