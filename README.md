@@ -1,9 +1,31 @@
-# Importo · v2.0.0
+<div align="center">
 
-**Tu costo real, puesto en bodega.**
+<img src="assets/banner.svg" width="100%" alt="Importa — tu negocio importa"/>
 
-Costeo de importaciones, inteligencia tributaria (F29/SII), logística y caja para comerciantes chilenos.
-Python + Streamlit + SQLite + Plotly + fpdf2. Sin servicios de pago. Multiusuario, con cuentas por correo y cumplimiento de la Ley 19.628 / 21.719.
+<br/>
+
+<img src="https://img.shields.io/badge/Python-0b1220?style=for-the-badge&logo=python&logoColor=22d3ee" alt="Python"/>
+<img src="https://img.shields.io/badge/Streamlit-0b1220?style=for-the-badge&logo=streamlit&logoColor=ff4b4b" alt="Streamlit"/>
+<img src="https://img.shields.io/badge/SQLite-0b1220?style=for-the-badge&logo=sqlite&logoColor=a78bfa" alt="SQLite"/>
+<img src="https://img.shields.io/badge/Plotly-0b1220?style=for-the-badge&logo=plotly&logoColor=5fd4a8" alt="Plotly"/>
+<img src="https://img.shields.io/badge/Ley_19.628_/_21.719-0b1220?style=for-the-badge&logo=letsencrypt&logoColor=f5b041" alt="Protección de datos"/>
+
+</div>
+
+**Importa** (antes *Importo*) calcula **tu costo real, puesto en bodega**: costeo de importaciones, inteligencia tributaria (F29/SII), logística y caja para comerciantes chilenos. Python + Streamlit + SQLite + Plotly + fpdf2, sin servicios de pago, multiusuario, con cuentas por correo y cumplimiento de la Ley 19.628 / 21.719.
+
+<table>
+<tr>
+<td width="50%"><img src="assets/capturas/panel-de-hoy.png" alt="Panel de hoy"/><br/><sub><b>Panel de hoy</b> · caja disponible, semáforo F29 y misión del día</sub></td>
+<td width="50%"><img src="assets/capturas/cotiza-tu-flete.png" alt="Cotiza tu flete"/><br/><sub><b>Cotiza tu flete</b> · marítimo, aéreo y courier con tus números</sub></td>
+</tr>
+<tr>
+<td width="50%"><img src="assets/capturas/salud-de-tu-empresa.png" alt="Salud de tu empresa"/><br/><sub><b>Salud de tu empresa</b> · puntaje 0–100 en seis dimensiones</sub></td>
+<td width="50%"><img src="assets/capturas/precios-y-margenes.png" alt="Precios y márgenes"/><br/><sub><b>Precios y márgenes</b> por canal de venta</sub></td>
+</tr>
+</table>
+
+> **Versiones en este repositorio:** el código de la carpeta `importo_v2.0.0/` es la **v2.0.0 (Importo)**, que es la que documenta esta guía. La **v2.1.0**, con la marca *Importa*, está dentro de `files.zip` junto con el material de marca. Las capturas de arriba son de la v2.1.0.
 
 ---
 
