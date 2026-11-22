@@ -1,0 +1,36 @@
+# Producción con HTTPS automático (Caddy + Let's Encrypt).
+# 1) cp .env.example .env  y completa IMPORTO_PEPPER y DOMINIO
+# 2) docker compose up -d
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - IMPORTO_DB=/data/importo.db
+    volumes:
+      - datos:/data
+    expose:
+      - "8501"
+    security_opt:
+      - no-new-privileges:true
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - DOMINIO=${DOMINIO}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - app
+
+volumes:
+  datos:
+  caddy_data:
+  caddy_config:
